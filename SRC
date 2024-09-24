@@ -1,0 +1,86 @@
+DROP DATABASE IF EXISTS HotelManagementSystem;
+create DATABASE HotelManagementSystem;
+USE HotelManagementSystem;
+
+CREATE TABLE Hospedes (
+    id_hospede INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    telefone VARCHAR(15),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Quartos (
+    id_quarto INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT NOT NULL UNIQUE,
+    tipo VARCHAR(50),
+    preco DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE Reservas (
+    id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+    id_hospede INT,
+    id_quarto INT,
+    data_checkin DATE NOT NULL,
+    data_checkout DATE NOT NULL,
+    FOREIGN KEY (id_hospede) REFERENCES Hospedes(id_hospede),
+    FOREIGN KEY (id_quarto) REFERENCES Quartos(id_quarto)
+);
+
+INSERT INTO Hospedes (nome, telefone, email) VALUES
+('Maria Silva', '123456789', 'maria.silva@email.com'),
+('Joao Santos', '987654321', 'joao.santos@email.com'),
+('Ana Oliveira', '456123789', 'ana.oliveira@email.com'),
+('Carlos Pereira', '321654987', 'carlos.pereira@email.com'),
+('Fernanda Costa', '654321987', 'fernanda.costa@email.com');
+
+INSERT INTO Quartos (numero, tipo, preco) VALUES
+(101, 'Single', 100.00),
+(102, 'Double', 150.00),
+(103, 'Suite', 250.00),
+(104, 'Single', 100.00),
+(105, 'Double', 150.00),
+(106, 'Suite', 250.00),
+(107, 'Single', 100.00),
+(108, 'Double', 150.00),
+(109, 'Suite', 250.00),
+(110, 'Single', 100.00);
+
+SELECT *
+FROM Reservas
+WHERE id_quarto IN (101, 102, 103, 104, 105)
+AND (
+    (data_checkin <= '2024-08-20' AND data_checkout >= '2024-08-15') OR
+    (data_checkin <= '2024-08-18' AND data_checkout >= '2024-08-16') OR
+    (data_checkin <= '2024-08-15' AND data_checkout >= '2024-08-10') OR
+    (data_checkin <= '2024-08-14' AND data_checkout >= '2024-08-12') OR
+    (data_checkin <= '2024-08-22' AND data_checkout >= '2024-08-17')
+);
+
+SELECT h.nome AS Hospede, q.numero AS Quarto, q.tipo AS Tipo, q.preco AS Preco,
+       r.data_checkin AS Checkin, r.data_checkout AS Checkout
+FROM Reservas r
+JOIN Hospedes h ON r.id_hospede = h.id_hospede
+JOIN Quartos q ON r.id_quarto = q.id_quarto;
+
+SELECT q.numero AS Quarto, q.tipo AS Tipo, q.preco AS Preco
+FROM Quartos q
+LEFT JOIN Reservas r ON q.id_quarto = r.id_quarto 
+  AND (r.data_checkin <= '2024-08-18' AND r.data_checkout >= '2024-08-16')
+WHERE r.id_quarto IS NULL;
+
+UPDATE Hospedes
+SET telefone = '1122334455', email = 'maria.silva@newemail.com'
+WHERE id_hospede = 1;
+
+UPDATE Quartos
+SET preco = 120.00
+WHERE id_quarto = 101;
+
+DELETE FROM Reservas
+WHERE id_reserva = 4;
+
+DELETE FROM Reservas
+WHERE id_hospede = 5;
+
+DELETE FROM Hospedes
+WHERE id_hospede = 5;

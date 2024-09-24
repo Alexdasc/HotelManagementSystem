@@ -1,0 +1,26 @@
+# Hotel Management System
+
+Este projeto é um sistema de gerenciamento de hotel que permite gerenciar hóspedes, quartos e reservas. As funcionalidades incluem a criação de hóspedes, quartos, reservas, bem como consultas para verificar a disponibilidade dos quartos.
+
+## Estrutura do Banco de Dados
+
+O banco de dados `HotelManagementSystem` contém as seguintes tabelas:
+
+- **Hospedes**: Armazena informações dos hóspedes, incluindo nome, telefone e email.
+- **Quartos**: Armazena informações dos quartos, incluindo número, tipo e preço.
+- **Reservas**: Armazena informações sobre as reservas, incluindo referências aos hóspedes e quartos, além das datas de check-in e check-out.
+
+## Funcionalidades
+
+- Adição de hóspedes e quartos.
+- Registro de reservas.
+- Consulta de reservas existentes.
+- Verificação de disponibilidade de quartos.
+- Atualização de dados de hóspedes e preços de quartos.
+- Exclusão de reservas e hóspedes.
+
+## Como Usar
+
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu_usuario/HotelManagementSystem.git
